@@ -132,11 +132,11 @@
 	  <div class="col-6">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <ins class="adsbygoogle"
-     style="display:block; text-align:center;"
+     style="display:block"
      data-ad-format="fluid"
-     data-ad-layout="in-article"
+     data-ad-layout-key="-6t+ed+2i-1n-4w"
      data-ad-client="ca-pub-8519280427354162"
-     data-ad-slot="9092146738"></ins>
+     data-ad-slot="8418154450"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
@@ -147,14 +147,11 @@
       <div class="col-12">
 	    <hr/>
 	    <h2 class="form-signin-heading" id="faqs">Registration List</h2>
-	    <?php
-		  require("register.php");
-		  
-		  $regList = get_registration_list();
-		  $csv = registration_list_to_csv($regList);
-		  echo "<div id='csv-list' style='visibility: hidden;'>" . $csv . "</div>";
-		  echo "<a download='registration_list.csv' href='data:text/csv;charset=UTF-8," . $csv. "'>Download As CSV</a>";
-		?>
+		<form action="dlcsv.php" method="post">
+			<input type="hidden" name="dl_csv" />
+			<input type="submit" value="Download as CSV" />
+		</form>
+	
 		<table class="table table-bordered table-sm table-inverse">
 		  <thead class="thead-default">
 		    <tr>
@@ -165,9 +162,15 @@
 		      <td>Notes</td>
 			  <td>Latitude</td>
 		      <td>Longitude</td>
+			  <td>RegularPickup?</td>
+			  <td>AppliancePickup?</td>
+		      <td>FurniturePickup?</td>
 		    </tr>
 		  </thead>
 		  <?php
+		  require("register.php");
+		  $regList = get_registration_list();
+		  
 		  foreach($regList as $rec) {
 		    echo "
 		  <tr>
@@ -178,6 +181,9 @@
 		      <td>" . $rec[4] . "</td>
 			  <td>" . $rec[5] . "</td>
 		      <td>" . $rec[6] . "</td>
+			  <td>" . $rec[7] . "</td>
+			  <td>" . $rec[8] . "</td>
+		      <td>" . $rec[9] . "</td>
 		    </tr>
 			";
 		  }

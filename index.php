@@ -94,7 +94,10 @@ $city = "Spokane";
 $state = "WA";
 $zipcode = 99207;
 $mailingList = true;
-
+$regularPickup = true;
+$appliancePickup = false;
+$furniturePickup = false;
+  
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
@@ -137,6 +140,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($phone) || $phone == '') {
     $err .= "Phone number is required. ";
   }
+  
+  $regularPickup = ($_POST["inputRegularPickup"] == "yes");
+  $appliancePickup = ($_POST["inputAppliancePickup"] == "yes");
+  $furniturePickup = ($_POST["inputFurniturePickup"] == "yes");
+  
   $comment = test_input($_POST["inputDescription"]);
   if (empty($comment) || $comment == '') {
     $err .= "Please tell us what you need picked up. ";
@@ -150,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     require 'register.php';
 	
-	$err = register($firstName, $lastName, $email, $phone, $address, $city, $state, $zipcode, $comment, $mailingList);
+	$err = register($firstName, $lastName, $email, $phone, $address, $city, $state, $zipcode, $comment, $mailingList, $regularPickup, $appliancePickup, $furniturePickup);
 	if (!empty($err)) {
 ?>
       <div class="alert alert-danger"><?php echo trim($err);?></div>
@@ -169,8 +177,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="col-12">
 	    <h2 class="form-signin-heading">Free Garbage Pickup Event!</h2>
 	    <p>If you live in the Nevada Heights Neighborhood, and are interested in signing up for the free garbage pickup event, please <a href="#register">fill out the form below</a>. If you have any questions, please check our <a href="#faqs">Frequently Asked Questions</a> list at the bottom of the page. The free garbage pickup event will take place on the following dates:</p>
-		<h3>Small Items and Regular trash: August XX-XX, 2018</h3>
-		<h3>Furniture and Large Appliance: August XX-XX, 2018</h3>
+		<h3>Small Items and Regular trash: June 5th and 6th, 2018</h3>
+		<h3>Large Appliance Pickup: August 8th, 2018</h3>
+		<h3>Furniture Pickup: August 16th, 2018</h3>
 		<p>After you register, we will send you a confirmation email to let you know we received your registration. Once we review your your registration, we will email you again to let you know what day your have been scheduled for.</p>
 		<hr/>
 		<address>
@@ -206,6 +215,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		  <label for="inputPhone" class="sr-only">Phone number</label>
           <input type="text" id="inputPhone" name="inputPhone" class="form-control" placeholder="Phone number" value="<?php echo $phone;?>" required="">
 		
+		  <p>Which pickup events are your signing up for?</p>
+		  <label for="inputRegularPickup" class="sr-only">Small Items/Regular Pickup?</label>
+		  <input type="checkbox" id="inputRegularPickup" name="inputRegularPickup" class="form-control" style="text-align:left;" value="yes" <?php if($regularPickup) { echo "checked"; }?>> Small Items/Regular Pickup Event?
+		  <label for="inputAppliancePickup" class="sr-only">Appliance Pickup?</label>
+		  <input type="checkbox" id="inputAppliancePickup" name="inputAppliancePickup" class="form-control" style="text-align:left;" value="yes" <?php if($appliancePickup) { echo "checked"; }?>> Appliance Pickup Event?
+		  <label for="inputFurniturePickup" class="sr-only">Furniture Pickup?</label>
+		  <input type="checkbox" id="inputFurniturePickup" name="inputFurniturePickup" class="form-control" style="text-align:left;" value="yes" <?php if($furniturePickup) { echo "checked"; }?>> Furniture Pickup Event?
+		
 		  <label for="inputDescription" class="sr-only">What do you need picked up?</label>
           <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="What do you need picked up?" rows="5" required=""><?php echo $comment;?></textarea>
 		  
@@ -221,11 +238,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	  <div class="col-6">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <ins class="adsbygoogle"
-     style="display:block; text-align:center;"
+     style="display:block"
      data-ad-format="fluid"
-     data-ad-layout="in-article"
+     data-ad-layout-key="-6t+ed+2i-1n-4w"
      data-ad-client="ca-pub-8519280427354162"
-     data-ad-slot="9092146738"></ins>
+     data-ad-slot="8418154450"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
@@ -252,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 		<button class="accordion"><b>Q:</b> <i>How many things can I have picked up?</i></button>
         <div class="panel">
-          <p>We are allowed to pick up no more than <strong>3 items</strong> per address. Have more than 3 items? Try asking your neighbor if they will register for a pickup, so you can get rid of your extra stuff!</p>
+          <p>We are allowed to pick up no more than <strong>6 items</strong> per address for the curbside pickup, and <strong>3 items</strong> for large appliance/furniture. Have more than items? Try asking your neighbor if they will register for a pickup, so you can get rid of your extra stuff!</p>
         </div>
 		<button class="accordion"><b>Q:</b> <i>Where do I put my items?</i></button>
         <div class="panel">
@@ -264,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 		<button class="accordion"><b>Q:</b> <i>Your website is cool! Who made it?</i></button>
         <div class="panel">
-          <p><a href="https://www.booksnbytes.net" target="_blank">Books N' Bytes, Inc.</a> did! Their owners, Jarren Long and Debra Shutt, just happen to be on our Board of Directors ;)</p>
+          <p><a href="https://www.booksnbytes.net">Books N' Bytes, Inc.</a> did! Their owners, Jarren Long and Debra Shutt, just happen to be members of our neighborhood council!</p>
         </div>
 		
 		<script>
