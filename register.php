@@ -19,10 +19,10 @@ function send_confirmation_email($name, $email, $comment) {
 function register($firstName, $lastName, $email, $phone, $address, $city, $state, $zipcode, $comment, $mailingList, $regularPickup, $appliancePickup, $furniturePickup) {
   $ret = '';
   
-  $servername = "mysql.nevadaheights.org";
-  $username = "nevadaheightsorg";
-  $password = "ps4fVuFm";
-  $dbname = "nevadaheights_org";
+  $servername = "";
+  $username = "";
+  $password = "";
+  $dbname = "";
 
   $conn = new mysqli($servername, $username, $password, $dbname);
   if ($conn->connect_error) {
